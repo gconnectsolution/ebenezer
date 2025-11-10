@@ -2,6 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Story+Script&display=swap');
 
+html {
+  scroll-behavior: smooth;
+}
+
+
 /* GLOBAL RESET */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -25,7 +30,6 @@
   position: relative;
   width: 100%;
   height: 100vh;
-  height: 100svh;
   min-height: 520px;
   display: flex;
   align-items: center;
@@ -72,7 +76,7 @@
   color: #ffffff;
 }
 
-.hero__description{
+.hero__description {
   font-size: 2rem;
   text-align: center;
   text-shadow: 2px 4px 0px rgba(2, 8, 20, 0.45);
@@ -99,7 +103,7 @@
   left: 0;
   width: 100%;
   z-index: 10;
-  padding: 10px 60px;
+  padding: 10px 20px;
   background: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
   display: flex;
   justify-content: space-between;
@@ -245,7 +249,6 @@
   position: sticky;
   top: 0;
   height: 100vh;
-  height: 100svh;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -274,8 +277,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-sizing: border-box;
-  opacity: 1; /* visible by default (GSAP handles animation) */
+  opacity: 1;
   transform: translateY(0);
 }
 
@@ -301,9 +303,8 @@
 }
 
 /* ===================================
-   INITIATIVES CAROUSEL
+   INITIATIVES
 =================================== */
-/* ===== EBENEZER INITIATIVES — 3D TILT CARDS ===== */
 .initiatives {
   background: linear-gradient(180deg, #e9f6ff, #dff5ff);
   padding: 100px 5%;
@@ -372,17 +373,9 @@
   color: #e6e6e6;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .initiative-card { height: 360px; }
-  .initiative-content h3 { font-size: 1.4rem; }
-}
-
 /* ===================================
    CONTACT SECTION
 =================================== */
-
-
 .contact-container {
   position: relative;
   background-image: url('public_html/img/doodle1.jpg');
@@ -413,7 +406,7 @@
 
 .contact-section {
   width: 80%;
-  margin: 10px  0;
+  margin: 10px 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -424,12 +417,11 @@
   color: #ffffff;
 }
 
-.contact-details h3{
+.contact-details h3 {
   font-size: 2rem;
   font-family: "Bebas Neue", sans-serif;
   letter-spacing: 0.2rem;
 }
-
 
 .map {
   padding: 24px 12px;
@@ -443,16 +435,160 @@
   padding: 20px 0;
 }
 
-
 /* ===================================
-   RESPONSIVE
+   ENHANCED RESPONSIVENESS
 =================================== */
-@media (max-width: 980px) {
-  .navbar { padding: 16px 24px; }
-  .hero__content { top: 20%; padding: 36px 18px; }
-  section { padding: 60px 5%; }
-  .panel-content { flex-direction: column; text-align: center; }
-  .panel-details { width: 100%; }
-  .panel-img { margin-top: 20px; }
-  .about, .contact-container, .panel { height: auto; padding: 60px 5%; }
+@media (max-width: 768px) {
+
+  /* Navbar */
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 20px;
+    background: rgba(0,0,0,0.8);
+  }
+
+  .navbar__menu {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .navbar__menu a {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: left;
+  }
+
+  /* Hero */
+  .hero {
+    height: 90vh;
+  }
+
+  .hero__content {
+    top: 25%;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .hero__title {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .hero__description {
+    font-size: 1.1rem;
+  }
+
+  /* About */
+  .about {
+    padding: 60px 5%;
+    height: auto;
+  }
+
+  .about-head h2 {
+    font-size: 2rem;
+  }
+
+  .about-head p {
+    font-size: 1rem;
+  }
+
+  .tiles {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* Panels */
+  .panel-content {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .panel-details {
+    width: 100%;
+  }
+
+  .panel-img {
+    margin-top: 16px;
+    width: 100%;
+  }
+
+  .panel-img img {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  /* Initiatives */
+  .initiatives {
+    padding: 60px 5%;
+  }
+
+  .initiative-card {
+    height: 300px;
+  }
+
+  /* Contact */
+  .contact-section {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .contact-details {
+    width: 100%;
+    order: 2;
+  }
+
+  .map {
+    width: 100%;
+    padding: 0;
+    order: 1;
+  }
+
+  .map iframe {
+    width: 100%;
+    height: 250px;
+    border-radius: 10px;
+  }
+
+  .contact-details h3 {
+    font-size: 1.4rem;
+  }
+
+  .contact-details p {
+    font-size: 1rem;
+  }
+
+  .footer-info p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Tiny screens (under 480px) */
+@media (max-width: 480px) {
+  .hero__title {
+    font-size: 1.8rem;
+  }
+
+  .hero__description {
+    font-size: 1rem;
+  }
+
+  .navbar__logo img {
+    height: 70px;
+    width: 70px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .initiative-content h3 {
+    font-size: 1.2rem;
+  }
 }
