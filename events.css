@@ -1,0 +1,39 @@
+.events-page {
+  padding: 4rem;
+  text-align: center;
+  background: #f8faff;
+  min-height: 100vh;
+}
+
+.events-page h1 {
+  color: #0b3d91;
+  margin-bottom: 2rem;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.event-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+}
+
+.event-card h2 {
+  color: #0b3d91;
+}
+
+.event-card .date {
+  color: #1ea1ff;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}

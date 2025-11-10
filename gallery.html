@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery | Ebenezer St. Thomas School</title>
+  <link rel="icon" href="public_html/img/school.png" />
+  <link rel="stylesheet" href="gallery.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Newsreader:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="Main Navigation">
+        <div class="logo">
+            <img src="public_html/img/school2.png" alt="Ebenezer School Logo" />
+            <span class="navbar__logo">Ebenezer</span>
+        </div>
+        <ul class="navbar__menu">
+            <li><a href="#about.html">About</a></li>
+            <li><a href="#studentlife.html">Student Life</a></li>
+            <li><a href="#events.html">Events</a></li>
+            <li><a href="#gallery.html">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#admin">Admin</a></li>
+        </ul>
+    </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <h1>Ebenezer Gallery</h1>
+      <p>Capturing the spirit of learning, creativity, and community.</p>
+    </div>
+    <div class="scroll-indicator">
+        <div class="scroll-cylinder">
+        <div class="scroll-dot"></div>
+        </div>
+        <p>Scroll</p>
+    </div>
+  </header>
+
+  <hr />
+
+  <!-- GALLERY SECTION -->
+<section class="gallery">
+  <div class="gallery-wrapper"></div>
+</section>
+
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox">
+    <span class="close">&times;</span>
+    <img class="lightbox-img" src="" alt="">
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 Ebenezer St. Thomas School — Developed by <a href="https://www.gconnectsolutions.com" target="_blank">G Connect Solutions</a></p>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="gallery.js"></script>
+</body>
+</html>

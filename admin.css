@@ -1,0 +1,322 @@
+/* Dropdown Section */
+.dropdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 0;
+  background: linear-gradient(180deg, #f4faff, #e9f6ff);
+}
+
+.dropdown-section {
+  background: #fff;
+  padding: 2rem 3rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.dropdown-section h1 {
+  color: #0b3d91;
+  margin-bottom: 1.2rem;
+  font-size: 1.8rem;
+  font-family: "Poppins", sans-serif;
+}
+
+.dropdown {
+  appearance: none;
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 1rem;
+  padding: 0.9rem 3rem 0.9rem 1rem;
+  border: 2px solid #000;
+  border-radius: 10px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='16' width='16' viewBox='0 0 20 20'><path d='M5.516 7.548L10 12.032l4.484-4.484L16 9.064l-6 6-6-6z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.8rem;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown:hover {
+  background-color: #ffffff;
+}
+
+/* ==========================
+   Form Wrapper (fixed height)
+========================== */
+.form-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 2px auto;
+  min-height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.form-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 3rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.3s;
+  text-align: center;
+}
+
+.form-section.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  z-index: 1;
+}
+
+
+/* Typography */
+.form-section h2 {
+  color: #0b3d91;
+  margin-bottom: 1rem;
+}
+
+.form-section p {
+  color: #444;
+  font-size: 1.1rem;
+}
+
+/*Image uploading*/
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.upload-box {
+  position: relative;
+  border: 2px dashed #0b3d91;
+  border-radius: 12px;
+  background: #f4faff;
+  width: 100%;
+  max-width: 400px;
+  height: 240px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.upload-box:hover {
+  background: #e9f6ff;
+  border-color: #1ea1ff;
+  box-shadow: 0 4px 20px rgba(30, 161, 255, 0.15);
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #0b3d91;
+  font-weight: 600;
+  text-align: center;
+  pointer-events: none;
+}
+
+.upload-label i {
+  font-size: 3rem;
+  color: #1ea1ff;
+  margin-bottom: 0.5rem;
+}
+
+/* Preview Image */
+.preview {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Button */
+.upload-btn {
+  background: linear-gradient(90deg, #0b3d91, #1ea1ff);
+  color: #fff;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(11, 61, 145, 0.25);
+}
+
+/* Status message */
+.upload-status {
+  font-size: 1rem;
+  color: #0b3d91;
+  margin-top: 0.5rem;
+}
+
+
+/*Event form*/
+.event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+  width: 100%;
+  max-width: 600px;
+  margin-inline: auto;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #0b3d91;
+  margin-bottom: 0.4rem;
+}
+
+.form-group input,
+.form-group textarea {
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #1ea1ff;
+  outline: none;
+}
+
+.day-display {
+  color: #1254cc;
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-top: 0.4rem;
+}
+
+/* Upload Section */
+.upload-section {
+  align-items: center;
+}
+
+.upload-label {
+  border: 2px dashed #0b3d91;
+  border-radius: 10px;
+  padding: 1.5rem;
+  text-align: center;
+  background: #f4faff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #0b3d91;
+  font-weight: 600;
+}
+
+.upload-label:hover {
+  background: #e9f6ff;
+  border-color: #1ea1ff;
+  box-shadow: 0 4px 20px rgba(30, 161, 255, 0.15);
+}
+
+.upload-label i {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.event-preview {
+  display: none;
+  width: 100%;
+  max-height: 240px;
+  border-radius: 8px;
+  margin-top: 0.8rem;
+  object-fit: cover;
+}
+
+/* Button */
+.event-btn {
+  background: linear-gradient(90deg, #0b3d91, #1ea1ff);
+  color: #fff;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.event-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(11, 61, 145, 0.25);
+}
+
+/* Preview Card */
+.event-preview-card {
+  margin-top: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  max-width: 600px;
+  margin-inline: auto;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+}
+
+.event-preview-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.event-preview-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.preview-content {
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.preview-content h3 {
+  color: #0b3d91;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.preview-content p {
+  color: #555;
+  margin-bottom: 0.4rem;
+}
+
+/* Hidden state */
+.hidden {
+  display: none;
+}

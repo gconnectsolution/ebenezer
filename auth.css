@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Newsreader:wght@400;600&display=swap');
+
+:root {
+  --accent: #1ea1ff;
+  --dark: #0a0f1a;
+  --light: #f5f8ff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Newsreader", serif;
+  background: #0a0f1a;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Layout */
+.login-page {
+  display: flex;
+  height: 100vh;
+}
+
+.login-left, .login-right {
+  flex: 1;
+  position: relative;
+}
+
+.login-left {
+  background: url('public_html/img/tk.jpeg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.login-left .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(3px);
+}
+
+.login-left .text-block {
+  position: relative;
+  text-align: center;
+  color: #fff;
+  z-index: 2;
+}
+
+.login-left img {
+  width: 90px;
+  margin-bottom: 16px;
+}
+
+.login-left h1 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 1px;
+}
+
+.login-left p {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/* Right Panel */
+.login-right {
+  background: linear-gradient(160deg, #0a0f1a, #101c32);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  backdrop-filter: blur(12px);
+  padding: 50px 40px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.login-box h2 {
+  color: #fff;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.3rem;
+  margin-bottom: 10px;
+}
+
+.sub {
+  color: #9db4d8;
+  margin-bottom: 40px;
+  font-size: 1rem;
+}
+
+/* Inputs */
+.input-group {
+  text-align: left;
+  margin-bottom: 25px;
+}
+
+.input-group label {
+  display: block;
+  color: #cfd8e3;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  outline: none;
+  transition: 0.3s;
+}
+
+.input-group input:focus {
+  border-color: var(--accent);
+  background: rgba(255,255,255,0.12);
+}
+
+/* Button */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--accent), #0a4aa0);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 8px;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(30,161,255,0.35);
+}
+
+/* Links */
+.links {
+  margin-top: 20px;
+  color: #a8b7d1;
+  font-size: 0.9rem;
+}
+.links a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity 0.3s;
+}
+.links a:hover { opacity: 0.8; }
+.links span { margin: 0 5px; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .login-page {
+    flex-direction: column;
+  }
+
+  .login-left, .login-right {
+    flex: none;
+    width: 100%;
+    height: 50vh;
+  }
+
+  .login-box {
+    width: 90%;
+    margin: auto;
+  }
+}

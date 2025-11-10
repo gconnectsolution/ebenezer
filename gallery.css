@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Newsreader:wght@400;600&display=swap');
+
+:root {
+  --accent: #1ea1ff;
+  --bg: #02060f;
+  --text: #fff;
+}
+
+/* RESET */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: "Newsreader", serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+/* NAVBAR */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo img {
+  height: 100px;
+  width: 100px;
+}
+
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  padding: 10px 60px;
+  background: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar__logo {
+  font-size: 5rem;
+  color: #fff;
+  font-family: "Bebas Neue", sans-serif;
+}
+
+.navbar__menu {
+  display: flex;
+  list-style: none;
+  gap: 40px;
+}
+
+.navbar__menu a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.navbar__menu a:hover {
+  background-color: #fff;
+  color: #000;
+  padding: 12px;
+  border-radius: 6px;
+  transform: translateX(8px);
+}
+/* HERO */
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: url('public_html/img/gallery-hero.jpg') center/cover no-repeat;
+}
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  padding: 20px;
+}
+.hero__content h1 {
+  font-family: "Bebas Neue";
+  font-size: 4rem;
+  margin-bottom: 10px;
+}
+.hero__content p {
+  color: #cdd8e4;
+  font-size: 1.1rem;
+}
+
+/* =========================
+   SCROLL INDICATOR (Cylinder + Dot)
+========================= */
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 5;
+}
+
+.scroll-cylinder {
+  width: 30px;
+  height: 60px;
+  border: 2px solid rgba(255,255,255,0.7);
+  border-radius: 50px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 8px rgba(255,255,255,0.15);
+}
+
+.scroll-dot {
+  width: 10px;
+  height: 10px;
+  background: #1ea1ff;
+  border-radius: 50%;
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scrollMove 2s ease-in-out infinite;
+}
+
+@keyframes scrollMove {
+  0%, 100% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, 36px);
+    opacity: 0.6;
+  }
+}
+
+.scroll-indicator p {
+  color: #fff;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  font-family: "Newsreader", serif;
+}
+
+
+/* GALLERY SECTION */
+.gallery {
+  padding: 120px 8%;
+  position: relative;
+  background: rgb(0, 0, 0);
+}
+.gallery-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-auto-rows: 240px;
+  gap: 20px;
+}
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s ease, filter 0.6s ease;
+  filter: brightness(0.8);
+}
+.gallery-item:hover img {
+  transform: scale(1.1);
+  filter: brightness(1);
+}
+.wide { grid-column: span 2; }
+.tall { grid-row: span 2; }
+
+/* LIGHTBOX */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(10px);
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+.lightbox img {
+  max-width: 85%;
+  max-height: 85%;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.close {
+  position: absolute;
+  top: 40px;
+  right: 60px;
+  color: #fff;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+.close:hover { color: var(--accent); }
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #bbb;
+}
+.footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .navbar { padding: 15px 30px; }
+  .hero__content h1 { font-size: 2.8rem; }
+  .gallery-wrapper { grid-auto-rows: 200px; }
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Ebenezer St. Thomas School</title>
+  <link rel="icon" href="img/school.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Newsreader:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="auth.css" />
+</head>
+<body>
+  <div class="login-page">
+    <!-- Left Section -->
+    <div class="login-left">
+      <div class="overlay"></div>
+      <div class="text-block">
+        <img src="public_html/img/school2.png" alt="Ebenezer Logo"  />
+        <h1>Ebenezer St. Thomas School</h1>
+        <p>In God We Trust</p>
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="login-right">
+      <div class="login-box">
+        <h2>Welcome</h2>
+        <p class="sub">Sign in to continue</p>
+
+        <form id="loginForm" class="login-form">
+          <div class="input-group">
+            <label for="email">Username</label>
+            <input id="email" type="email" placeholder="Enter your username" required />
+          </div>
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input id="password" type="password" placeholder="Enter your password" required />
+          </div>
+
+          <button type="submit" class="login-btn">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>
