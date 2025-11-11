@@ -1,19 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Newsreader:wght@400;600&display=swap');
 
 :root {
-  --accent: #1ea1ff;
   --bg: #02060f;
   --text: #fff;
-}
-
-:root {
-  --accent: #1ea1ff;
+    --accent: #1ea1ff;
   --overlay-start: rgba(3, 18, 42, 0.45);
   --overlay-end: rgba(3, 18, 42, 0.25);
   --text-max-width: 1100px;
   --vh: 100vh;
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
+
 
 /* RESET */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -128,6 +125,10 @@ body {
 
 /* Mobile Menu Styles */
 @media (max-width: 768px) {
+  .navbar__logo {
+    font-size: 1.5rem;
+    
+  }
   .hamburger {
     display: flex;
   }

@@ -129,6 +129,10 @@ body {
 
 /* Mobile Menu Styles */
 @media (max-width: 768px) {
+  .navbar__logo {
+    font-size: 1.5rem;
+    
+  }
   .hamburger {
     display: flex;
   }
@@ -177,6 +181,7 @@ body {
 .login-page {
   display: flex;
   height: 100vh;
+  padding: 10px 0;
 }
 
 .login-left, .login-right {

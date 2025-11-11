@@ -139,6 +139,11 @@ body { font-family: "Newsreader", serif; background: #000; color: #fff; overflow
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
+  .navbar__logo {
+    font-size: 1.5rem;
+    
+  }
+
   .navbar__menu.active {
     transform: translateY(0);
     opacity: 1;

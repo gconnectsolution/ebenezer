@@ -6,7 +6,9 @@
   align-items: center;
   height: auto;
   padding: 4rem 0;
+  width: 120%;
   background: linear-gradient(180deg, #6dbdff, #005897);
+  overflow-x: hidden;
 }
 
 .logo{
@@ -21,7 +23,7 @@
 }
 
 .logo h1{
-  font-size: 5rem;
+  font-size: 3rem;
   color: #000000;
   font-family: "Bebas Neue", sans-serif;
 }
