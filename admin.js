@@ -11,40 +11,89 @@ selector.addEventListener('change', () => {
 });
 
 // Gallery Upload Logic
-const imageUpload = document.getElementById('imageUpload');
-const previewImage = document.getElementById('previewImage');
-const uploadForm = document.getElementById('galleryUploadForm');
-const uploadStatus = document.getElementById('uploadStatus');
+// ===== GALLERY FORM LOGIC =====
+// ===== GALLERY FORM LOGIC =====
+const galleryForm = document.getElementById("galleryForm");
+const galleryImage = document.getElementById("galleryImage");
+const galleryPreview = document.getElementById("galleryPreview");
+const galleryPreviewCard = document.getElementById("galleryPreviewCard");
+const previewGalleryImg = document.getElementById("previewGalleryImg");
+const editGalleryBtn = document.getElementById("editGalleryBtn");
+const submitGalleryBtn = document.getElementById("submitGalleryBtn");
 
-imageUpload.addEventListener('change', (e) => {
+let selectedGalleryFile = null;
+
+// Preview on file select
+galleryImage.addEventListener("change", (e) => {
   const file = e.target.files[0];
-  if (file && file.type.startsWith('image/')) {
+  if (file && file.type.startsWith("image/")) {
+    selectedGalleryFile = file; // Store selected file globally
     const reader = new FileReader();
     reader.onload = (e) => {
-      previewImage.src = e.target.result;
-      previewImage.style.display = 'block';
+      galleryPreview.src = e.target.result;
+      galleryPreview.style.display = "block";
     };
     reader.readAsDataURL(file);
+  } else {
+    selectedGalleryFile = null;
   }
 });
 
-uploadForm.addEventListener('submit', (e) => {
+// Form submit (show preview card)
+galleryForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const file = imageUpload.files[0];
-  if (!file) {
-    uploadStatus.textContent = "Please select an image before saving.";
-    uploadStatus.style.color = "red";
+  if (!selectedGalleryFile) {
+    alert("Please select an image first.");
     return;
   }
-  uploadStatus.textContent = "Saving image...";
-  uploadStatus.style.color = "#0b3d91";
-  setTimeout(() => {
-    uploadStatus.textContent = "Image saved successfully!";
-    uploadStatus.style.color = "green";
-    uploadForm.reset();
-    previewImage.style.display = 'none';
-  }, 1500);
+
+  previewGalleryImg.src = galleryPreview.src;
+  galleryPreviewCard.classList.remove("hidden");
+  setTimeout(() => galleryPreviewCard.classList.add("show"), 50);
 });
+
+// Edit button resets form
+editGalleryBtn.addEventListener("click", () => {
+  galleryForm.reset();
+  galleryPreview.src = "";
+  galleryPreview.style.display = "none";
+  selectedGalleryFile = null;
+  galleryPreviewCard.classList.add("hidden");
+});
+
+// Upload image to backend
+submitGalleryBtn.addEventListener("click", async () => {
+  if (!selectedGalleryFile) {
+    alert("Please select an image before uploading.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("image", selectedGalleryFile);
+
+  try {
+    const response = await fetch("/api/galleryupload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      alert("✅ Image uploaded successfully!");
+      galleryForm.reset();
+      galleryPreviewCard.classList.add("hidden");
+      selectedGalleryFile = null;
+    } else {
+      alert("❌ Failed to upload image: " + data.message);
+    }
+  } catch (error) {
+    console.error("Gallery upload error:", error);
+    alert("Server error while uploading image.");
+  }
+});
+
+
+
 
 // Event Form Logic
 const eventForm = document.getElementById('eventForm');
@@ -62,25 +111,25 @@ eventDate.addEventListener('change', () => {
   } else dayDisplay.textContent = "";
 });
 
-//eventImage.addEventListener('change', (e) => {
-//  const file = e.target.files[0];
-//  if (file && file.type.startsWith('image/')) {
-//    const reader = new FileReader();
-//    reader.onload = (e) => {
-//      eventPreview.src = e.target.result;
-//      eventPreview.style.display = 'block';
-//    };
-//    reader.readAsDataURL(file);
-//  }
-//});
+eventImage.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file && file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      eventPreview.src = e.target.result;
+      eventPreview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+});
 
 eventForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const title = document.getElementById('eventTitle').value.trim();
   const desc = document.getElementById('eventDesc').value.trim();
   const date = document.getElementById('eventDate').value;
-  //const file = eventImage.files[0];
-  if (!title || !desc || !date) {
+  const file = eventImage.files[0];
+  if (!title || !desc || !date || !file) {
     alert("Please fill in all fields and upload an image.");
     return;
   }
@@ -90,32 +139,50 @@ eventForm.addEventListener('submit', (e) => {
   document.getElementById('previewTitle').textContent = title;
   document.getElementById('previewDesc').textContent = desc;
   document.getElementById('previewDate').textContent = formattedDate;
-  //document.getElementById('previewImg').src = eventPreview.src;
+  document.getElementById('previewImg').src = eventPreview.src;
   previewCard.classList.remove('hidden');
   setTimeout(() => previewCard.classList.add('show'), 50);
 });
 
 
-const submitBtn = document.querySelector('.submit-btn');
+const submitBtn = document.getElementById('.submit-btn');
 
-submitBtn.addEventListener('click', async () => {
-  const title = document.getElementById('eventTitle').value.trim();
-  const description = document.getElementById('eventDesc').value.trim();
-  const date = document.getElementById('eventDate').value;
-  const day = document.getElementById('dayDisplay').textContent.replace('Day: ', '').trim();
+submitBtn.addEventListener("click", async () => {
+  const title = document.getElementById("eventTitle").value.trim();
+  const description = document.getElementById("eventDesc").value.trim();
+  const date = document.getElementById("eventDate").value;
+  const day = document.getElementById("dayDisplay").textContent.replace("Day: ", "").trim();
+  const file = document.getElementById("eventImage").files[0];
 
-  if (!title || !description || !date) {
-    alert("Please fill all fields before submitting.");
+  if (!title || !description || !date || !file) {
+    alert("Please fill all fields and upload an image.");
     return;
   }
 
-  const payload = { title, description, date, day };
-
   try {
+    // Step 1: Upload the image
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const uploadRes = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const uploadData = await uploadRes.json();
+    if (!uploadData.success) throw new Error("Image upload failed");
+
+    // Step 2: Save the event with the uploaded image path
     const res = await fetch("/api/events", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        title,
+        description,
+        date,
+        day,
+        image: uploadData.filePath,
+      }),
     });
 
     const data = await res.json();
@@ -123,7 +190,6 @@ submitBtn.addEventListener('click', async () => {
     if (data.success) {
       alert("✅ Event saved successfully!");
       console.log("Saved Event:", data.event);
-      //window.location.href = "/events.html"; // Redirect to events page
     } else {
       alert("❌ Failed to save event.");
     }

@@ -12,21 +12,27 @@
 </head>
 <body>
 
-    <nav class="navbar" role="navigation" aria-label="Main Navigation">
-        <div class="logo">
-            <img src="public_html/img/school2.png" alt="Ebenezer School Logo" />
-            <span class="navbar__logo">Ebenezer</span>
-        </div>
-        <!--<ul class="navbar__menu">
-            <li><a href="#about.html">About</a></li>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="studentlife.html">Student Life</a></li>
-            <li><a href="events.html">Events</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="auth.html">Admin</a></li>
-        </ul>-->
-    </nav>
+     <nav class="navbar" role="navigation" aria-label="Main Navigation">
+    <div class="navbar__container">
+      <div class="logo">
+        <img src="public_html/img/school2.png" alt="Ebenezer School Logo" />
+        <span class="navbar__logo">Ebenezer</span>
+      </div>
+      <ul class="navbar__menu" id="navbarMenu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="studentslife.html">Student Life</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="auth.html">Admin</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
 
     <header class="page-hero" role="banner" aria-label="About Us hero section">
         <div class="page-hero__background" style="background-image: url('public_html/img/1.jpg');">

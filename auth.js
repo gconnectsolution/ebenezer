@@ -11,7 +11,7 @@ const loginForm = document.getElementById("loginForm");
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const email = document.getElementById("email").value;
+  const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
   const loginBtn = e.target.querySelector(".login-btn");
   const originalText = loginBtn.textContent;
@@ -24,7 +24,7 @@ loginForm.addEventListener("submit", async (e) => {
     const response = await fetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, password }),
     });
 
     const data = await response.json();
@@ -44,4 +44,27 @@ loginForm.addEventListener("submit", async (e) => {
     loginBtn.textContent = originalText;
     loginBtn.disabled = false;
   }
+});
+
+gsap.registerPlugin(ScrollTrigger);
+
+// reveal sections with stagger (sections are .reveal)
+gsap.utils.toArray(".reveal").forEach((el, i) => {
+  gsap.fromTo(
+    el,
+    { y: 60, opacity: 0, scale: 0.98 },
+    {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 1.1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: el,
+        start: "top 85%",
+        toggleActions: "play none none none"
+      },
+      delay: i * 0.05
+    }
+  );
 });

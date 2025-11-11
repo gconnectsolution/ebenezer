@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Life | Ebenezer St. Thomas School</title>
+  <link rel="icon" href="public_html/img/school.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Newsreader:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="studentslife.css" />
+</head>
+
+<body>
+  <!-- NAVBAR -->
+ <nav class="navbar" role="navigation" aria-label="Main Navigation">
+    <div class="navbar__container">
+      <div class="logo">
+        <img src="public_html/img/school2.png" alt="Ebenezer School Logo" />
+        <span class="navbar__logo">Ebenezer</span>
+      </div>
+      <ul class="navbar__menu" id="navbarMenu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="studentslife.html">Student Life</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="auth.html">Admin</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-gradient"></div>
+    <div class="hero-content">
+      <h1>Life at Ebenezer</h1>
+      <p>Where imagination meets purpose, and learning lives beyond classrooms.</p>
+
+      <div class="scroll-indicator">
+        <div class="scroll-cylinder">
+          <div class="scroll-ball"></div>
+        </div>
+        <span>Scroll Down</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- SECTIONS -->
+  <main class="scroll-wrapper">
+
+    <section class="parallax-section" style="--img:url('public_html/img/tk2.jpeg')">
+      <div class="glass">
+        <h2>Sports & Fitness</h2>
+        <p>Our students discover the thrill of victory and the art of resilience — every field is a classroom for courage.</p>
+      </div>
+    </section>
+
+    <section class="parallax-section" style="--img:url('public_html/img/tk8.jpeg')">
+      <div class="glass">
+        <h2>Art & Expression</h2>
+        <p>We celebrate creativity through color, rhythm, and movement. Every wall, every stage, tells a story.</p>
+      </div>
+    </section>
+
+    <section class="parallax-section" style="--img:url('public_html/img/tk7.jpeg')">
+      <div class="glass">
+        <h2>Innovation & Clubs</h2>
+        <p>From robotics to debate, students explore curiosity that turns into innovation — and passion into purpose.</p>
+      </div>
+    </section>
+
+    <section class="parallax-section" style="--img:url('public_html/img/tk10.jpeg')">
+      <div class="glass">
+        <h2>Community & Compassion</h2>
+        <p>Learning to lead begins with learning to give. Service projects build hearts as much as minds.</p>
+      </div>
+    </section>
+
+    <section class="parallax-section" style="--img:url('public_html/img/tk4.jpeg')">
+      <div class="glass">
+        <h2>Festivals & Legacy</h2>
+        <p>Annual fests, science expos, and celebrations that bring our family together — memories that live forever.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Ebenezer St. Thomas School — Developed by 
+      <a href="https://www.gconnectsolutions.com" target="_blank">G Connect Solutions</a>
+    </p>
+  </footer>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="studentslife.js"></script>
+</body>
+</html>

@@ -9,6 +9,29 @@
   <link rel="stylesheet" href="auth.css" />
 </head>
 <body>
+
+   <nav class="navbar" role="navigation" aria-label="Main Navigation">
+    <div class="navbar__container">
+      <div class="logo">
+        <img src="public_html/img/school2.png" alt="Ebenezer School Logo" />
+        <span class="navbar__logo">Ebenezer</span>
+      </div>
+      <ul class="navbar__menu" id="navbarMenu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="studentslife.html">Student Life</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="auth.html">Admin</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
   <div class="login-page">
     <!-- Left Section -->
     <div class="login-left">
@@ -28,8 +51,8 @@
 
         <form id="loginForm" class="login-form">
           <div class="input-group">
-            <label for="email">Username</label>
-            <input id="email" type="email" placeholder="Enter your username" required />
+            <label for="username">Username</label>
+            <input id="username" type="text" placeholder="Enter your username" required />
           </div>
           <div class="input-group">
             <label for="password">Password</label>

@@ -7,6 +7,29 @@
   <link rel="stylesheet" href="events.css" />
 </head>
 <body>
+
+  <nav class="navbar" role="navigation" aria-label="Main Navigation">
+    <div class="navbar__container">
+      <div class="logo">
+        <img src="public_html/img/school2.png" alt="Ebenezer School Logo" />
+        <span class="navbar__logo">Ebenezer</span>
+      </div>
+      <ul class="navbar__menu" id="navbarMenu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="studentslife.html">Student Life</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="auth.html">Admin</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
   <section class="events-page">
     <h1>Upcoming Events</h1>
     <div id="eventsContainer" class="events-grid"></div>
@@ -30,11 +53,16 @@
           const card = document.createElement("div");
           card.className = "event-card";
           card.innerHTML = `
-            <h2>${event.title}</h2>
-            <p class="date">${new Date(event.date).toLocaleDateString("en-US", {
-              weekday: "long", year: "numeric", month: "long", day: "numeric"
-            })}</p>
-            <p>${event.description}</p>
+          <div class = 'event-container'>
+            <img src="${event.image}" alt="Event Image" class="event-photo">
+            <div>
+              <h2>${event.title}</h2>
+              <p class="date">${new Date(event.date).toLocaleDateString("en-US", {
+                weekday: "long", year: "numeric", month: "long", day: "numeric"
+              })}</p>
+              <p>${event.description}</p>
+            </div>
+          </div>
           `;
           container.appendChild(card);
         });

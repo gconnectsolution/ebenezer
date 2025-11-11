@@ -79,3 +79,26 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     });
 });
+
+gsap.registerPlugin(ScrollTrigger);
+
+// reveal sections with stagger (sections are .reveal)
+gsap.utils.toArray(".reveal").forEach((el, i) => {
+  gsap.fromTo(
+    el,
+    { y: 60, opacity: 0, scale: 0.98 },
+    {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 1.1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: el,
+        start: "top 85%",
+        toggleActions: "play none none none"
+      },
+      delay: i * 0.05
+    }
+  );
+});

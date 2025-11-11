@@ -12,10 +12,16 @@
 
 <body>
   <div class="dropdown-container">
+    <a href="index.html"><div class="logo">
+      <img src="public_html/img/school2.png" alt="ebenezer_logo"/>
+      <h1>Ebenezer</h1>
+    </div>
+    </a>
     <div class="dropdown-section">
       <h1>Ebenezer Admin Page</h1>
-      <h1>Select Page</h1>
+      <h2>Select Page</h2>
       <a href="events.html" target="_blank">Events</a>
+      <a href="gallery.html" target="_blank">Gallery</a>
       <select class="dropdown" id="pageSelector">
         <option disabled selected>Choose an option</option>
         <option value="gallery">Gallery</option>
@@ -26,23 +32,32 @@
 
   <div class="form-wrapper">
     <!-- GALLERY FORM -->
-    <div class="gallery-from form-section">
-      <h2>Gallery Form</h2>
-      <p>Upload an Image it will be saved to the gallery section.</p>
+  <div class="gallery-from form-section">
+    <h2>Gallery Form</h2>
+    <p>Upload an image — it will be shown in the gallery page.</p>
 
-      <form class="upload-form" id="galleryUploadForm">
-        <div class="upload-box" id="uploadBox">
-          <input type="file" id="imageUpload" accept="image/*" hidden />
-          <label for="imageUpload" class="upload-label">
-            <i class="fas fa-cloud-upload-alt"></i>
-            <span>Click or drag an image here</span>
-          </label>
-          <img id="previewImage" class="preview" src="" alt="Preview" />
-        </div>
-        <button type="submit" class="upload-btn">Save Image</button>
-      </form>
-      <p class="upload-status" id="uploadStatus"></p>
+    <form class="upload-form" id="galleryForm">
+      <div class="form-group upload-section">
+        <label for="galleryImage">Gallery Image</label>
+        <input type="file" id="galleryImage" accept="image/*" required />
+        <img id="galleryPreview" class="event-preview" alt="Gallery Preview" />
+      </div>
+
+      <button type="submit" class="event-btn">Preview Image</button>
+    </form>
+
+    <div class="event-preview-card hidden" id="galleryPreviewCard">
+      <img id="previewGalleryImg" src="" alt="Uploaded Image" />
+      <div class="preview-content">
+        <h3>Preview</h3>
+        <p>This image will appear in the Gallery page.</p>
+      </div>
+      <button type="button" class="edit-btn" id="editGalleryBtn">Edit</button>
+      <button type="button" class="gallery-submit-btn" id="submitGalleryBtn">Upload</button>
     </div>
+  </div>
+
+
 
     <!-- EVENTS FORM -->
     <div class="events-from form-section">
@@ -66,11 +81,11 @@
           <p class="day-display" id="dayDisplay"></p>
         </div>
 
-        <!--<div class="form-group upload-section">
+        <div class="form-group upload-section">
           <label>Event Image</label>
           <input type="file" id="eventImage" accept="image/*" />
           <img id="eventPreview" class="event-preview" alt="Event Preview" />
-        </div>-->
+        </div>
 
         <button type="submit" class="event-btn">Preview Event</button>
       </form>
