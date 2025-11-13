@@ -21,7 +21,7 @@ const galleryImage = document.getElementById("galleryImage");
 const galleryPreview = document.getElementById("galleryPreview");
 const galleryPreviewCard = document.getElementById("galleryPreviewCard");
 const previewGalleryImg = document.getElementById("previewGalleryImg");
-const editGalleryBtn = document.getElementById("editGalleryBtn");
+//const editGalleryBtn = document.getElementById("editGalleryBtn");
 const submitGalleryBtn = document.getElementById("submitGalleryBtn");
 
 let selectedGalleryFile = null;
@@ -56,11 +56,11 @@ galleryForm.addEventListener("submit", (e) => {
 });
 
 // Edit (back) button for gallery
-editGalleryBtn.addEventListener("click", () => {
-  galleryPreviewCard.classList.add("hidden");
-  galleryPreviewCard.classList.remove("show");
-  galleryPreview.style.display = "block";
-});
+//editGalleryBtn.addEventListener("click", () => {
+//  galleryPreviewCard.classList.add("hidden");
+//  galleryPreviewCard.classList.remove("show");
+//  galleryPreview.style.display = "block";
+//});
 
 // Upload gallery image
 submitGalleryBtn.addEventListener("click", async () => {
@@ -103,7 +103,7 @@ const dayDisplay = document.getElementById('dayDisplay');
 const eventImage = document.getElementById('eventImage');
 const eventPreview = document.getElementById('eventPreview');
 const previewCard = document.getElementById('eventPreviewCard');
-const eventEditBtn = previewCard.querySelector('.edit-btn');
+//const eventEditBtn = previewCard.querySelector('.edit-btn');
 const submitBtn = document.getElementById('submit-btn');
 
 // Auto display day when selecting date
@@ -157,11 +157,11 @@ eventForm.addEventListener('submit', (e) => {
 });
 
 // Edit (back) button for event preview
-eventEditBtn.addEventListener("click", () => {
-  previewCard.classList.add("hidden");
-  previewCard.classList.remove("show");
-  eventPreview.style.display = "block";
-});
+//eventEditBtn.addEventListener("click", () => {
+//  previewCard.classList.add("hidden");
+//  previewCard.classList.remove("show");
+//  eventPreview.style.display = "block";
+//});
 
 // Submit event data to backend
 if (submitBtn) {

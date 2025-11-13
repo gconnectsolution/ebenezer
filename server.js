@@ -17,8 +17,8 @@ app.use("/eventimages", express.static(path.join(__dirname, "eventimages")));
 app.use("/galleryimages", express.static(path.join(__dirname, "galleryimages")));
 
 // --- DATABASE SETUP ---
-const sequelize = new Sequelize("ebenezer_school", "root", "Mysql123", {
-  host: "127.0.0.1",
+const sequelize = new Sequelize("u542801010_school", "u542801010_ebenezer", "Gconnectsolutions@2025", {
+  host: "srv1823.hstgr.io",
   dialect: "mysql",
   logging: false,
 });

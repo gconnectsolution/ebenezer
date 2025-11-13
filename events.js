@@ -1,9 +1,12 @@
 
+
+// GSAP ScrollTrigger for panels (if not already)
+
 const { Sequelize, DataTypes } = require("sequelize");
 
 // Create Sequelize instance (reuse same credentials)
-const sequelize = new Sequelize("ebenezer_school", "root", "Mysql123", {
-  host: "127.0.0.1",
+const sequelize = new Sequelize("u542801010_school", "u542801010_ebenezer", "Gconnectsolutions@2025", {
+  host: "srv1823.hstgr.io",
   dialect: "mysql",
   logging: false,
 });
@@ -17,3 +20,5 @@ const Event = sequelize.define("Event", {
 });
 
 module.exports = Event;
+
+
