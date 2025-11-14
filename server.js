@@ -168,6 +168,52 @@ app.delete("/api/gallery/:filename", (req, res) => {
 });
 
 
+// --- UPDATE EVENT (supports image upload too) ---
+app.put("/api/events/:id", uploadEventImage.single("image"), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description, date } = req.body;
+
+    const event = await Event.findByPk(id);
+
+    if (!event) {
+      return res.status(404).json({ success: false, message: "Event not found" });
+    }
+
+    // If new image was uploaded → use it
+    let updatedImage = event.image;
+    if (req.file) {
+      updatedImage = `/eventimages/${req.file.filename}`;
+
+      // delete old image
+      if (event.image) {
+        const oldImg = event.image.replace("/eventimages/", "");
+        const oldPath = path.join(__dirname, "eventimages", oldImg);
+        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+      }
+    }
+
+    await event.update({
+      title,
+      description,
+      date,
+      image: updatedImage
+    });
+
+    res.json({
+      success: true,
+      message: "Event updated successfully!",
+      event
+    });
+
+  } catch (error) {
+    console.error("❌ Update event error:", error);
+    res.status(500).json({ success: false, message: "Failed to update event." });
+  }
+});
+
+
+
 
 // --- DELETE EVENT ---
 app.delete("/api/events/:id", async (req, res) => {

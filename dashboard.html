@@ -23,6 +23,42 @@
 
   </div>
 
+  <!-- ---------------- POPUP MODAL ---------------- -->
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup-card" id="popupCard">
+
+    <h2 id="popupTitle">Edit</h2>
+
+    <div class="popup-body">
+
+      <!-- Current Preview -->
+      <img id="popupImage" src="" alt="Preview">
+
+      <!-- EVENT FIELDS -->
+      <input type="text" id="popupEventTitle" placeholder="Event Title" class="event-field">
+      <textarea id="popupEventDesc" placeholder="Event Description" class="event-field"></textarea>
+      <input type="date" id="popupEventDate" class="event-field">
+
+      <!-- EVENT IMAGE REPLACER -->
+      <label class="event-field">Replace Event Image (optional)</label>
+      <input type="file" id="popupEventImage" accept="image/*" class="event-field">
+
+      <!-- GALLERY FIELDS -->
+      <p id="galleryNote" class="gallery-field">Replace Gallery Image:</p>
+      <input type="file" id="popupGalleryReplace" accept="image/*" class="gallery-field">
+
+    </div>
+
+    <div class="popup-actions">
+      <button id="popupSave" class="save-btn">Save</button>
+      <button id="popupClose" class="close-btn">Cancel</button>
+    </div>
+
+  </div>
+</div>
+
+
+
   <script src="dashboard.js"></script>
 </body>
 </html>
