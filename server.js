@@ -135,6 +135,74 @@ app.use((err, req, res, next) => {
   res.status(500).json({ success: false, message: "Internal server error" });
 });
 
+// --- DELETE GALLERY IMAGE ---
+app.delete("/api/gallery/:filename", (req, res) => {
+  const filename = req.params.filename;
+
+  // Calculate full path
+  const filePath = path.join(__dirname, "galleryimages", filename);
+
+  console.log("Attempting delete:", filePath);
+
+  // Check if file exists
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json({
+      success: false,
+      message: "File not found in galleryimages folder",
+      filename: filename
+    });
+  }
+
+  // Delete file
+  fs.unlink(filePath, (err) => {
+    if (err) {
+      console.error("Delete error:", err);
+      return res.status(500).json({
+        success: false,
+        message: "Error deleting file",
+      });
+    }
+
+    res.json({ success: true, message: "Image deleted successfully!" });
+  });
+});
+
+
+
+// --- DELETE EVENT ---
+app.delete("/api/events/:id", async (req, res) => {
+  try {
+    const eventId = req.params.id;
+
+    // Find the event first
+    const event = await Event.findByPk(eventId);
+    if (!event) {
+      return res.status(404).json({ success: false, message: "Event not found" });
+    }
+
+    // If event has an image, delete it
+    if (event.image) {
+      const imageName = event.image.replace("/eventimages/", "");
+      const imagePath = path.join(__dirname, "eventimages", imageName);
+
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
+    }
+
+    // Delete event from DB
+    await event.destroy();
+
+    res.json({ success: true, message: "Event deleted successfully!" });
+
+  } catch (error) {
+    console.error("❌ Delete event error:", error);
+    res.status(500).json({ success: false, message: "Failed to delete event." });
+  }
+});
+
+
+
 // --- START SERVER ---
 app.listen(PORT, () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);

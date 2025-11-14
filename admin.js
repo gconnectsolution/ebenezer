@@ -214,3 +214,10 @@ if (submitBtn) {
     }
   });
 }
+
+
+const dashboard = document.getElementById('dashboard')
+
+dashboard.onclick = () => {
+  window.location.href = "dashboard.html";
+};

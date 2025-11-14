@@ -1,0 +1,68 @@
+body {
+  font-family: 'Newsreader', serif;
+  margin: 0;
+  background: #f3f7ff;
+}
+
+.dashboard-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#dashboardSelect {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+}
+
+.dashboard-content {
+  margin-top: 40px;
+  display: grid;
+  gap: 20px;
+}
+
+.gallery-item-box,
+.event-item-box {
+  display: flex;
+  gap: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+  align-items: center;
+}
+
+.gallery-item-box img,
+.event-item-box img {
+  width: 140px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.item-details h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.delete-btn {
+  background: #ff4d4d;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.delete-btn:hover {
+  background: #e60000;
+}
