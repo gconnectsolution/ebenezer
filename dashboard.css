@@ -166,3 +166,13 @@ body {
 .event-field, .gallery-field {
   display: none;
 }
+
+.back{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.fa-arrow-left{
+  cursor: pointer;
+}

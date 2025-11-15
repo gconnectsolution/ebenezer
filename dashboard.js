@@ -276,3 +276,9 @@ if (!token) {
   alert("Unauthorized access! Please log in first.");
   window.location.href = "/auth.html";
 }
+
+
+const back = document.getElementById('back')
+back.onclick = () => {
+  window.location.href = '/admin.html';
+}
