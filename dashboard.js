@@ -17,6 +17,8 @@ const popupEventDate = document.getElementById("popupEventDate");
 const popupEventImage = document.getElementById("popupEventImage");
 
 const popupGalleryReplace = document.getElementById("popupGalleryReplace");
+const popupGalleryDescription = document.getElementById("popupGalleryDescription");
+
 
 const popupSave = document.getElementById("popupSave");
 const popupClose = document.getElementById("popupClose");
@@ -47,31 +49,41 @@ async function loadGallery() {
 
     contentBox.innerHTML = "";
 
-    data.images.forEach(img => {
-      if (!img.includes("/galleryimages/")) return;
-
-      const filename = img.replace("/galleryimages/", "");
+    data.images.forEach(item => {
+      const filename = item.src.replace("/galleryimages/", "");
 
       const box = document.createElement("div");
       box.className = "gallery-item-box";
 
       box.innerHTML = `
-        <img src="${img}" alt="">
-        <div class="item-details">
-            <h3>${filename}</h3>
-        </div>
-        <button class="edit-btn" onclick="openEditPopup('gallery', '${filename}', '${img}')">Edit</button>
-        <button class="delete-btn" onclick="deleteGalleryImage('${filename}')">Delete</button>
-      `;
+  <img src="${item.src}" alt="">
+  <div class="item-details">
+      <h3>${filename}</h3>
+      <p class="item-desc">${item.description || "No description"}</p>
+  </div>
+  <button class="edit-btn">Edit</button>
+  <button class="delete-btn">Delete</button>
+`;
+
+// attach listeners (keeps description available)
+const editBtn = box.querySelector('.edit-btn');
+editBtn.addEventListener('click', () => {
+  openEditPopup('gallery', filename, item.src, /* title */ '', /* desc */ item.description || '', /* date */ '');
+});
+
+const deleteBtn = box.querySelector('.delete-btn');
+deleteBtn.addEventListener('click', () => deleteGalleryImage(filename));
+
 
       contentBox.appendChild(box);
     });
 
-  } catch (error) {
+  } catch (err) {
+    console.error(err);
     contentBox.innerHTML = "<p>Error loading gallery.</p>";
-    console.error("Gallery Load Error:", error);
   }
 }
+
 
 
 // ==========================
@@ -83,15 +95,13 @@ async function deleteGalleryImage(filename) {
   try {
     const res = await fetch(`/api/gallery/${filename}`, { method: "DELETE" });
     const data = await res.json();
-
     alert(data.message);
     loadGallery();
-
-  } catch (error) {
-    alert("Server error. Could not delete.");
-    console.error("Delete error:", error);
+  } catch (e) {
+    alert("Server error");
   }
 }
+
 
 
 // ==========================
@@ -155,38 +165,41 @@ async function deleteEvent(id) {
 
 
 // ======================================================
-//                EDIT POPUP FUNCTION
-// ======================================================
 function openEditPopup(type, id, img, title = "", desc = "", date = "") {
-
   editingType = type;
   editingId = id;
   currentEventImage = img;
 
-  popupImage.src = img;
+  if (popupImage) popupImage.src = img;
 
   // Hide all fields first
-  document.querySelectorAll(".event-field, .gallery-field")
-    .forEach(el => el.style.display = "none");
+  document.querySelectorAll(".event-field, .gallery-field").forEach(el => el.style.display = "none");
 
   if (type === "event") {
     popupTitle.innerText = "Edit Event";
-
     document.querySelectorAll(".event-field").forEach(el => el.style.display = "block");
-
-    popupEventTitle.value = title;
-    popupEventDesc.value = desc;
-    popupEventDate.value = date ? date.split("T")[0] : "";
+    if (popupEventTitle) popupEventTitle.value = title;
+    if (popupEventDesc) popupEventDesc.value = desc || "";
+    if (popupEventDate) popupEventDate.value = date ? date.split("T")[0] : "";
   }
 
   if (type === "gallery") {
-    popupTitle.innerText = "Edit Gallery Image";
+  popupTitle.innerText = "Edit Gallery Image";
+  document.querySelectorAll(".gallery-field").forEach(el => el.style.display = "block");
 
-    document.querySelectorAll(".gallery-field").forEach(el => el.style.display = "block");
+  if (popupGalleryDescription) {
+    popupGalleryDescription.value = desc || "";
+    popupGalleryDescription.dataset.oldValue = desc || "";
+  } else {
+    console.warn("popupGalleryDescription element not found in DOM.");
   }
 
-  popupOverlay.style.display = "flex";
+  if (popupGalleryReplace) popupGalleryReplace.value = "";
 }
+
+  if (popupOverlay) popupOverlay.style.display = "flex";
+}
+
 
 
 
@@ -236,28 +249,71 @@ popupSave.addEventListener("click", async () => {
 
 
   // ---------------------- GALLERY UPDATE ----------------------
-  if (editingType === "gallery") {
-    const file = popupGalleryReplace.files[0];
+if (editingType === "gallery") {
+  // Defensive checks
+  if (!popupGalleryDescription) {
+    console.error("popupGalleryDescription is missing. Aborting gallery update.");
+    alert("Internal error: description field missing.");
+    popupOverlay.style.display = "none";
+    return;
+  }
 
+  // Read values
+  let newDescription = popupGalleryDescription.value ? popupGalleryDescription.value.trim() : "";
+  const oldDescription = popupGalleryDescription.dataset?.oldValue ?? "";
+
+  // If user left description empty, keep old value
+  if (!newDescription) {
+    newDescription = oldDescription;
+  }
+
+  const file = (popupGalleryReplace && popupGalleryReplace.files && popupGalleryReplace.files[0]) ? popupGalleryReplace.files[0] : null;
+
+  try {
+    // CASE 1: Only description changed (no file)
     if (!file) {
-      alert("Please select an image to replace.");
+      console.log("Updating gallery description for:", editingId, "desc:", newDescription);
+      const res = await fetch("/api/gallery/update-description", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ filename: editingId, description: newDescription })
+      });
+
+      if (!res.ok) {
+        console.warn("update-description returned non-ok status", res.status);
+      }
+      await loadGallery();
+      popupOverlay.style.display = "none";
       return;
     }
 
+    // CASE 2: Replace image + update description
     const fd = new FormData();
     fd.append("image", file);
+    fd.append("description", newDescription);
+    console.log("Uploading new gallery image for:", editingId);
 
-    const uploadRes = await fetch("/api/galleryupload", {
-      method: "POST",
-      body: fd
-    });
-    const result = await uploadRes.json();
+    const uploadRes = await fetch("/api/galleryupload", { method: "POST", body: fd });
+    const uploadData = await uploadRes.json();
 
-    if (result.success) {
+    if (uploadData.success) {
+      // remove the old file on server if required
       await fetch(`/api/gallery/${editingId}`, { method: "DELETE" });
-      loadGallery();
+    } else {
+      console.warn("galleryupload failed:", uploadData);
     }
+
+    await loadGallery();
+  } catch (err) {
+    console.error("Gallery update error:", err);
+    alert("Server error while updating gallery.");
+  } finally {
+    popupOverlay.style.display = "none";
   }
+}
+
+
+
 
   popupOverlay.style.display = "none";
 });

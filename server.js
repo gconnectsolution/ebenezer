@@ -46,6 +46,20 @@ const galleryStorage = multer.diskStorage({
 });
 const uploadGalleryImage = multer({ storage: galleryStorage });
 
+const galleryDataFile = path.join(__dirname, "galleryData.json");
+
+// Load existing gallery descriptions
+function loadGalleryData() {
+  if (!fs.existsSync(galleryDataFile)) return [];
+  return JSON.parse(fs.readFileSync(galleryDataFile, "utf-8"));
+}
+
+// Save updated gallery descriptions
+function saveGalleryData(data) {
+  fs.writeFileSync(galleryDataFile, JSON.stringify(data, null, 2));
+}
+
+
 // --- LOGIN ROUTE ---
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
@@ -70,12 +84,30 @@ app.post("/api/upload", uploadEventImage.single("image"), (req, res) => {
 
 // --- GALLERY IMAGE UPLOAD ROUTE ---
 app.post("/api/galleryupload", uploadGalleryImage.single("image"), (req, res) => {
+  const description = req.body.description;
+
   if (!req.file)
     return res.status(400).json({ success: false, message: "No file uploaded" });
 
   const filePath = `/galleryimages/${req.file.filename}`;
+
+  // Load existing data
+  const galleryData = loadGalleryData();
+
+  // Add new image entry
+  galleryData.push({
+    src: filePath,
+    description: description || "No description",
+    alt: "Gallery Image",
+    size: ""
+  });
+
+  // Save metadata file
+  saveGalleryData(galleryData);
+
   res.json({ success: true, filePath });
 });
+
 
 // --- CREATE EVENT ROUTE ---
 app.post("/api/events", async (req, res) => {
@@ -107,21 +139,42 @@ app.get("/api/events", async (req, res) => {
 app.get("/api/gallery", (req, res) => {
   const folderPath = path.join(__dirname, "galleryimages");
 
+  // Load metadata JSON
+  const galleryData = loadGalleryData();
+
   fs.readdir(folderPath, (err, files) => {
     if (err) {
       console.error("❌ Error reading gallery folder:", err);
-      return res
-        .status(500)
-        .json({ success: false, message: "Failed to read gallery folder." });
+      return res.status(500).json({ success: false, message: "Failed to read gallery folder." });
     }
 
-    const images = files
-      .filter((file) => /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(file))
-      .map((file) => `/galleryimages/${file}`);
+    // Convert folder images → metadata format (in case not in JSON)
+    const folderImages = files
+      .filter(file => /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(file))
+      .map(file => {
+        const pathSrc = `/galleryimages/${file}`;
 
-    res.json({ success: true, images });
+        // If JSON already has this image, skip adding duplicate
+        const exists = galleryData.find(img => img.src === pathSrc);
+        if (exists) return null;
+
+        return {
+          src: pathSrc,
+          alt: "Gallery Image",
+          description: "No description",
+          size: ""
+        };
+      })
+      .filter(Boolean); // remove nulls
+
+    // Combine JSON + folder images
+    const finalImages = [...galleryData, ...folderImages];
+
+    res.json({ success: true, images: finalImages });
   });
 });
+
+
 
 // --- SERVE PAGES ---
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
@@ -138,34 +191,39 @@ app.use((err, req, res, next) => {
 // --- DELETE GALLERY IMAGE ---
 app.delete("/api/gallery/:filename", (req, res) => {
   const filename = req.params.filename;
-
-  // Calculate full path
   const filePath = path.join(__dirname, "galleryimages", filename);
 
-  console.log("Attempting delete:", filePath);
+  // 1. Load galleryData.json
+  let galleryData = loadGalleryData();
 
-  // Check if file exists
-  if (!fs.existsSync(filePath)) {
-    return res.status(404).json({
-      success: false,
-      message: "File not found in galleryimages folder",
-      filename: filename
-    });
+  // 2. Remove the item from JSON metadata
+  const filtered = galleryData.filter(item => item.src !== `/galleryimages/${filename}`);
+
+  if (filtered.length === galleryData.length) {
+    console.log("⚠ JSON entry not found, but continuing…");
   }
 
-  // Delete file
-  fs.unlink(filePath, (err) => {
-    if (err) {
-      console.error("Delete error:", err);
-      return res.status(500).json({
-        success: false,
-        message: "Error deleting file",
-      });
-    }
+  // save updated JSON
+  saveGalleryData(filtered);
 
-    res.json({ success: true, message: "Image deleted successfully!" });
-  });
+  // 3. Delete actual file from folder
+  if (fs.existsSync(filePath)) {
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.error("❌ Error deleting file:", err);
+        return res.status(500).json({ success: false, message: "File exists but deletion failed" });
+      }
+
+      return res.json({ success: true, message: "Image deleted successfully!" });
+    });
+  } else {
+    return res.json({
+      success: true,
+      message: "Image deleted (file did not exist, metadata removed)."
+    });
+  }
 });
+
 
 
 // --- UPDATE EVENT (supports image upload too) ---
@@ -217,6 +275,7 @@ app.put("/api/events/:id", uploadEventImage.single("image"), async (req, res) =>
 
 // --- DELETE EVENT ---
 app.delete("/api/events/:id", async (req, res) => {
+  
   try {
     const eventId = req.params.id;
 
@@ -246,6 +305,34 @@ app.delete("/api/events/:id", async (req, res) => {
     res.status(500).json({ success: false, message: "Failed to delete event." });
   }
 });
+
+// --- UPDATE GALLERY DESCRIPTION ONLY ---
+app.post("/api/gallery/update-description", (req, res) => {
+  const { filename, description } = req.body;
+
+  if (!filename) {
+    return res.status(400).json({ success: false, message: "Filename missing." });
+  }
+
+  // Load existing metadata
+  let galleryData = loadGalleryData();
+
+  // Find entry
+  const item = galleryData.find(img => img.src === `/galleryimages/${filename}`);
+
+  if (!item) {
+    return res.status(404).json({ success: false, message: "Image not found in metadata." });
+  }
+
+  // Update description (keeping old one if missing)
+  item.description = description && description.trim() !== "" ? description : item.description;
+
+  // Save updated JSON
+  saveGalleryData(galleryData);
+
+  res.json({ success: true, message: "Description updated successfully!" });
+});
+
 
 
 

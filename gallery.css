@@ -295,6 +295,34 @@ a{
   filter: brightness(0.8);
 }
 
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hidden by default */
+.gallery-item .img-description {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background: rgba(0,0,0,0.65);
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: all 0.35s ease;
+}
+
+/* Show on hover */
+.gallery-item:hover .img-description {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
 .gallery-item:hover img {
   transform: scale(1.1);
   filter: brightness(1);

@@ -1,21 +1,22 @@
 // ====== STATIC IMAGES (already in your project) ======
 const staticImages = [
-  { src: "public_html/img/event-.3.jpeg", alt: "Annual Day Celebration", size: "tall" },
-  { src: "public_html/img/T1.jpg", alt: "Science Exhibition", size: "wide" },
-  { src: "public_html/img/tk.jpeg", alt: "Sports Event", size: "" },
-  { src: "public_html/img/tk1.jpeg", alt: "Art and Culture", size: "tall" },
-  { src: "public_html/img/tk2.jpeg", alt: "Classroom Activities", size: "wide" },
-  { src: "public_html/img/tk3.jpeg", alt: "Outdoor Adventures", size: "" },
-  { src: "public_html/img/tk4.jpeg", alt: "Workshops", size: "wide" },
-  { src: "public_html/img/tk5.jpeg", alt: "Annual Fest", size: "" },
-  { src: "public_html/img/tk6.jpeg", alt: "Science Exhibition", size: "wide" },
-  { src: "public_html/img/tk7.jpeg", alt: "Sports Event", size: "" },
-  { src: "public_html/img/tk8.jpeg", alt: "Art and Culture", size: "tall" },
-  { src: "public_html/img/tk9.jpeg", alt: "Classroom Activities", size: "wide" },
-  { src: "public_html/img/tk10.jpeg", alt: "Outdoor Adventures", size: "" },
-  { src: "public_html/img/tk11.jpeg", alt: "Workshops", size: "wide" },
-  { src: "public_html/img/tt1.jpg", alt: "Annual Fest", size: "" }
+  { src: "public_html/img/event-.3.jpeg", alt: "Annual Day Celebration", size: "tall", description: "A glimpse of the Annual Day Celebration event." },
+  { src: "public_html/img/T1.jpg", alt: "Science Exhibition", size: "wide", description: "Students presenting models at the science exhibition." },
+  { src: "public_html/img/tk.jpeg", alt: "Sports Event", size: "", description: "Students participating in a sports event." },
+  { src: "public_html/img/tk1.jpeg", alt: "Art and Culture", size: "tall", description: "Showcasing creativity during the art and culture program." },
+  { src: "public_html/img/tk2.jpeg", alt: "Classroom Activities", size: "wide", description: "Engaging classroom learning activities." },
+  { src: "public_html/img/tk3.jpeg", alt: "Outdoor Adventures", size: "", description: "Students enjoying outdoor adventure activities." },
+  { src: "public_html/img/tk4.jpeg", alt: "Workshops", size: "wide", description: "Hands-on learning during various workshops." },
+  { src: "public_html/img/tk5.jpeg", alt: "Annual Fest", size: "", description: "Celebrations and performances at the annual fest." },
+  { src: "public_html/img/tk6.jpeg", alt: "Science Exhibition", size: "wide", description: "Another view from the science exhibition event." },
+  { src: "public_html/img/tk7.jpeg", alt: "Sports Event", size: "", description: "Highlights from different sports competitions." },
+  { src: "public_html/img/tk8.jpeg", alt: "Art and Culture", size: "wide", description: "Cultural performances and artistic displays." },
+  { src: "public_html/img/tk9.jpeg", alt: "Classroom Activities", size: "wide", description: "Classroom interactions and group activities." },
+  { src: "public_html/img/tk10.jpeg", alt: "Outdoor Adventures", size: "", description: "Fun and learning combined during outdoor activities." },
+  { src: "public_html/img/tk11.jpeg", alt: "Workshops", size: "wide", description: "Students participating in skill-building workshops." },
+  { src: "public_html/img/tt1.jpg", alt: "Annual Fest", size: "", description: "Memories from the vibrant annual festival." }
 ];
+
 
 // ====== LOAD BOTH STATIC + SERVER IMAGES ======
 async function loadGallery() {
@@ -28,9 +29,14 @@ async function loadGallery() {
     const allImages = [...staticImages];
 
     if (data.success && Array.isArray(data.images)) {
-      data.images.forEach(src => {
-        allImages.push({ src, alt: "School Moment", size: "" });
+      data.images.forEach(img => {
+      allImages.push({
+        src: img.src,
+        alt: img.alt || "School Moment",
+        size: img.size || "",
+        description: img.description || "No description"
       });
+    });
     }
 
     // Render them
@@ -51,13 +57,19 @@ function renderGallery(images) {
     div.classList.add("gallery-item");
     if (img.size) div.classList.add(img.size);
     div.dataset.img = img.src;
-    div.innerHTML = `<img src="${img.src}" alt="${img.alt}">`;
+
+    div.innerHTML = `
+      <img src="${img.src}" alt="${img.alt}">
+      <div class="img-description">${img.description || "No description available"}</div>
+    `;
+
     galleryWrapper.appendChild(div);
   });
 
   setupLightbox();
   animateGallery();
 }
+
 
 // ====== LIGHTBOX FUNCTIONALITY ======
 function setupLightbox() {
